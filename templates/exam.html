@@ -6,6 +6,19 @@
     <title>QuestLab</title>
 </head>
 <body>
-    <p>{{ questoes }}</p>
+    <form>
+        {% for key, value in questoes.items() %}
+        <div>
+            <h1>{{ key }}</h1>
+            <div>{{ value['enunciado'] }}</div>
+            <div>{{ value.alternativas['a'] }}</div>
+            <div>{{ value.alternativas['b'] }}</div>
+            <div>{{ value.alternativas['c'] }}</div>
+            <div>{{ value.alternativas['d'] }}</div>
+            <div>{{ value.alternativas['e'] }}</div>
+
+        </div>
+        {% endfor %}
+    </form>
 </body>
 </html>

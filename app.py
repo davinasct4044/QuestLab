@@ -16,13 +16,14 @@ def render_index():
 def generate_exam():
     contentUser = request.form['inputcontent']
     quest_generated = create_exam(contentUser)
-
+    quest_generated = loads(quest_generated)
     session['quest_generated'] = quest_generated
     return redirect(url_for('render_exam'))
 
 @app.route('/exam' , methods=['GET'])#exibe o questionário
 def render_exam():
     quest = session.get('quest_generated')
+    print(quest)
     return render_template('exam.html', questoes=quest)
 
 @app.route('/result', methods=['GET']) #mostra quantas acertou
