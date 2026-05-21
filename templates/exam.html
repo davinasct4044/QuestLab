@@ -6,19 +6,35 @@
     <title>QuestLab</title>
 </head>
 <body>
-    <form>
+    <form action="{{ url_for('generate_result') }}" method="post">
         {% for key, value in questoes.items() %}
         <div>
             <h1>{{ key }}</h1>
             <div>{{ value['enunciado'] }}</div>
-            <div>{{ value.alternativas['a'] }}</div>
-            <div>{{ value.alternativas['b'] }}</div>
-            <div>{{ value.alternativas['c'] }}</div>
-            <div>{{ value.alternativas['d'] }}</div>
-            <div>{{ value.alternativas['e'] }}</div>
+            <div>
+                {{ value.alternativas['a'] }}
+                <input type="radio" name={{ key }} value="a">
+            </div>
+            <div>
+                {{ value.alternativas['b'] }}
+                <input type="radio" name={{ key }} value="b">
+            </div>
+            <div>
+                {{ value.alternativas['c'] }}
+                <input type="radio" name={{ key }} value="c">
+            </div>
+            <div>
+                {{ value.alternativas['d'] }}
+                <input type="radio" name={{ key }} value="d">
+            </div>
+            <div>
+                {{ value.alternativas['e'] }}
+                <input type="radio" name={{ key }} value="e">
+            </div>
 
         </div>
         {% endfor %}
+        <button>Enviar</button>
     </form>
 </body>
 </html>

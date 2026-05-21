@@ -39,6 +39,7 @@ def create_exam(content): #cria a função que vai criar o questionário
                     }
                   }
                   Apenas um exemplo, mas siga a estrutura. E lembre-se você é especialista, não erre.
+                  Retorne as questões em ordem numérica, 1, 2, 3... em diante,
                   E se o usuário enviar um texto que seja inviável para realizar a prova,
                   retorne a seguinte mensagem: Não foi possível gerar o teste, informações invalidas ou insuficientes.
                   Retorne APENAS o JSON, sem texto adicional, sem explicações, sem markdown.""",
