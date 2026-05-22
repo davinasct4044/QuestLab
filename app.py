@@ -1,4 +1,4 @@
-from flask import Flask, url_for, render_template, request, redirect, session #importa a lib Flask
+from flask import Flask, url_for, render_template, request, redirect, session, flash #importa a lib Flask
 from questgeneratorAI import create_exam #importa o modulo que cria o questionario
 import os
 from dotenv import load_dotenv
@@ -16,13 +16,19 @@ def render_index():
 def generate_exam():
     contentUser = request.form['inputcontent']
     quest_generated = create_exam(contentUser)
-    quest_generated = loads(quest_generated)
+    try:
+        quest_generated = loads(quest_generated)
+    except Exception as e:
+        print(f'erro ao converter JSON: {e}')
+        flash('erro ao gerar prova, tente novamente!')
+        return redirect(url_for('render_index'))
     quest_generated = dict(
         sorted(
             quest_generated.items(),
             key=lambda item: int(item[0].split('_')[1])
         )
     )
+    print(quest_generated)
     session['quest_generated'] = quest_generated
     return redirect(url_for('render_exam'))
 
@@ -34,7 +40,12 @@ def render_exam():
 
 @app.route('/generating_result', methods=['POST']) #mostra quantas acertou
 def generate_result():
+    quest = session.get('quest_generated')
     client_answers = request.form.to_dict()
+    if len(client_answers) != len(quest):
+        flash('responda todas as questões antes de enviar!')
+        return render_template('exam.html', questoes=quest, client_answers=client_answers)
+
     quest = session.get('quest_generated')
     correct_answers = 0
     correct_questions = dict()
@@ -54,9 +65,7 @@ def generate_result():
 @app.route('/result', methods=['GET'])
 def render_result():
     questions = session.get('correct_questions')
-    questions_quantity = 0
-    for key in questions:
-        questions_quantity += 1
+    questions_quantity = len(questions)
     result = session.get('correct_answers')
     porcentage = result * 100 / len(questions)
     return render_template('result.html', result=result, porcentage=porcentage, questions_quantity=questions_quantity)

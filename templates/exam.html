@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuestLab</title>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </head>
 <body>
     <form action="{{ url_for('generate_result') }}" method="post">
@@ -13,23 +20,28 @@
             <div>{{ value['enunciado'] }}</div>
             <div>
                 {{ value.alternativas['a'] }}
-                <input type="radio" name={{ key }} value="a">
+                <input type="radio" name={{ key }} value="a"
+                {{ 'checked' if client_answers and client_answers.get(key) == 'a' }}>
             </div>
             <div>
                 {{ value.alternativas['b'] }}
-                <input type="radio" name={{ key }} value="b">
+                <input type="radio" name={{ key }} value="b"
+                {{ 'checked' if client_answers and client_answers.get(key) == 'b' }}>
             </div>
             <div>
                 {{ value.alternativas['c'] }}
-                <input type="radio" name={{ key }} value="c">
+                <input type="radio" name={{ key }} value="c"
+                {{ 'checked' if client_answers and client_answers.get(key) == 'c' }}>
             </div>
             <div>
                 {{ value.alternativas['d'] }}
-                <input type="radio" name={{ key }} value="d">
+                <input type="radio" name={{ key }} value="d"
+                {{ 'checked' if client_answers and client_answers.get(key) == 'd' }}>
             </div>
             <div>
                 {{ value.alternativas['e'] }}
-                <input type="radio" name={{ key }} value="e">
+                <input type="radio" name={{ key }} value="e"
+                {{ 'checked' if client_answers and client_answers.get(key) == 'e' }}>
             </div>
 
         </div>
