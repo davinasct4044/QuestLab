@@ -6,8 +6,25 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Result</title>
+
 </head>
 <body>
+    {% if session.get('username') %}
+        <h5>{{ session.get('username') }}</h5>
+        <div>
+            <form action="{{ url_for('sign_out', routename='result') }}" method="post">
+                <button>Sair</button>
+            </form>
+        </div>
+        <div>
+            <form action="{{ url_for('delete_account', routename='index', id=session.get('id')) }}" method="post">
+                <button>Excluir conta e sair</button>
+            </form>
+        </div>
+    {% else %}
+        <a href="{{ url_for('sign_up', routename='result') }}">Inscreva-se para salvar sua prova </a>
+        <a href="{{ url_for('login', routename='index') }}">Entrar</a>
+    {% endif %}
     <div>
         <div>
             <p>Seu aproveitamento foi de {{ porcentage }}%</p>

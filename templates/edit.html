@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Dados do usuário disponíveis para editar:</h1>
+
+    <form action="{{ url_for('edit_account', routename=routename) }}" method="post">
+        <!--no action vc passa o comando usando o jinja para executar a função desejada em python, tem
+         que colocar o method tbm.-->
+        <div class="Form">
+            <div class="senha">
+                <input name="old_password" placeholder="Digite a senha antiga">
+            </div>
+            <div class="senha">
+                <input name="new_password" placeholder="Digite a nova senha">
+            </div>
+            <button class="enviar">
+                enviar
+            </button>
+        </div>
+    </form>
+
+</body>
+</html>
