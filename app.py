@@ -1,4 +1,3 @@
-import bcrypt
 from flask import Flask, url_for, render_template, request, redirect, session, flash #importa a lib Flask
 from questgeneratorAI import create_exam #importa o modulo que cria o questionario
 from database import create_table, signup_user, get_user, delete_user, get_user_by_id, update_user
