@@ -1,0 +1,149 @@
+body{
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #f8fafc;
+
+    font-family: Inter, sans-serif;
+}
+.password-container{
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 24px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+    text-align: center;
+
+    position: relative;
+}
+.password-form{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+.password-form input{
+
+    padding: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    font-size: 16px;
+}
+.password-form input:focus{
+
+    outline: none;
+
+    border-color: #33F2A0;
+}
+.password-form button{
+
+    border: none;
+
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background: #33F2A0;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+.password-form button:hover{
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 8px 20px rgba(51,242,160,0.3);
+}
+.password-subtitle{
+
+    color: #64748b;
+
+    margin-bottom: 24px;
+}
+.back-button{
+
+    position: absolute;
+
+    top: 20px;
+
+    left: 20px;
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    color: #64748b;
+}
+
+.flash-message{
+
+    margin-top: 24px;
+
+    padding: 14px 20px;
+
+    border-radius: 14px;
+
+    background: rgba(220, 38, 38, 0.08);
+
+    border: 1px solid rgba(220, 38, 38, 0.25);
+
+    color: #dc2626;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    text-align: center;
+
+    box-shadow:
+        0 0 20px rgba(220, 38, 38, 0.12);
+
+    animation: flashAppear .3s ease;
+}
+
+@keyframes flashAppear{
+
+    from{
+
+        opacity: 0;
+
+        transform: translateY(-8px);
+    }
+
+    to{
+
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}

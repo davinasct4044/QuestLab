@@ -4,25 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuestLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/exam.css') }}">
 
 </head>
 <body>
+
+<header class="top-bar">
+
+    <div class="brand">
+
+        <img src="{{ url_for('static', filename='img/Simbolo_Questlab-removebg-preview.png') }}"
+            alt="QuestLab"
+            class="brand-logo">
+
+        <span class="brand-name">
+            Quest<span class="brand-highlight">Lab</span>
+        </span>
+
+    </div>
     {% if session.get('username') %}
-        <h5>{{ session.get('username') }}</h5>
-        <div>
-            <form action="{{ url_for('sign_out', routename='exam') }}" method="post">
-                <button>Sair</button>
-            </form>
+
+       <div class="profile-menu">
+
+            <button class="profile-button" onclick="togglemenu()">
+
+                <div class="profile-avatar">{{ session.get('username')[0].upper() }}</div>
+                <span class="username">{{ session.get('username') }}</span>
+                <span class="arrow">❯</span>
+
+            </button>
+
+            <div class="profile-dropdown" id="profile-dropdown">
+
+                <form action="{{ url_for('sign_out', routename='exam') }}" method="post">
+                    <button class="signout-button">Sair</button>
+                </form>
+
+                <form action="{{ url_for('delete_account', routename='exam', id=session.get('id')) }}" method="post">
+                    <button class="delete-button">Excluir conta e sair</button>
+                </form>
+
+                <a href="{{ url_for('edit_account',routename='exam') }}">Trocar a senha</a>
+
+            </div>
         </div>
-        <div>
-            <form action="{{ url_for('delete_account', routename='index', id=session.get('id')) }}" method="post">
-                <button>Excluir conta e sair</button>
-            </form>
-        </div>
-    {% else %}
-        <a href="{{ url_for('sign_up', routename='exam') }}">Inscreva-se</a>
-        <a href="{{ url_for('login', routename='index') }}">Entrar</a>
+
+        {% else %}
+
+    <div class="auth-buttons">
+
+            <a class="signup-button" href="{{ url_for('sign_up', routename='exam') }}">Inscreva-se</a>
+            <a class="login-button" href="{{ url_for('login', routename='exam') }}">Entrar</a>
+
+    </div>
+
     {% endif %}
+
+</header>
+
+<main>
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -30,40 +71,103 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <form action="{{ url_for('generate_result') }}" method="post">
-        {% for key, value in questoes.items() %}
-        <div>
-            <h1>{{ key }}</h1>
-            <div>{{ value['enunciado'] }}</div>
-            <div>
-                {{ value.alternativas['a'] }}
-                <input type="radio" name={{ key }} value="a"
-                {{ 'checked' if client_answers and client_answers.get(key) == 'a' }}>
-            </div>
-            <div>
-                {{ value.alternativas['b'] }}
-                <input type="radio" name={{ key }} value="b"
-                {{ 'checked' if client_answers and client_answers.get(key) == 'b' }}>
-            </div>
-            <div>
-                {{ value.alternativas['c'] }}
-                <input type="radio" name={{ key }} value="c"
-                {{ 'checked' if client_answers and client_answers.get(key) == 'c' }}>
-            </div>
-            <div>
-                {{ value.alternativas['d'] }}
-                <input type="radio" name={{ key }} value="d"
-                {{ 'checked' if client_answers and client_answers.get(key) == 'd' }}>
-            </div>
-            <div>
-                {{ value.alternativas['e'] }}
-                <input type="radio" name={{ key }} value="e"
-                {{ 'checked' if client_answers and client_answers.get(key) == 'e' }}>
-            </div>
+    <div class="exam-header">
 
-        </div>
-        {% endfor %}
-        <button>Enviar</button>
+        <p class="ai-status">
+            {{ questoes|length }} questões criadas a partir do conteúdo enviado
+        </p>
+
+        <h1>Sua avaliação está pronta</h1>
+
+        <p>
+            Responda às questões abaixo.
+        </p>
+
+    </div>
+    <form action="{{ url_for('generate_result') }}" method="post" class="exam-form">
+            {% for key, value in questoes.items() %}
+            <div class="question-card" style="animation-delay: {{ loop.index0 * 0.15 }}s;">
+
+                <h2 class="question-title">Questão {{ loop.index }}</h2>
+
+                <p class="question-text">{{ value['enunciado'] }}</p>
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="{{ key }}"
+                        value="a"
+                        {{ 'checked' if client_answers and client_answers.get(key) == 'a' }}
+                    >
+
+                    <span>
+                        {{ value.alternativas['a'] }}
+                    </span>
+                </label>
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="{{ key }}"
+                        value="b"
+                        {{ 'checked' if client_answers and client_answers.get(key) == 'b' }}
+                    >
+
+                    <span>
+                        {{ value.alternativas['b'] }}
+                    </span>
+                </label>
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="{{ key }}"
+                        value="c"
+                        {{ 'checked' if client_answers and client_answers.get(key) == 'c' }}
+                    >
+
+                    <span>
+                        {{ value.alternativas['c'] }}
+                    </span>
+                </label>
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="{{ key }}"
+                        value="d"
+                        {{ 'checked' if client_answers and client_answers.get(key) == 'd' }}
+                    >
+
+                    <span>
+                        {{ value.alternativas['d'] }}
+                    </span>
+                </label>
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="{{ key }}"
+                        value="e"
+                        {{ 'checked' if client_answers and client_answers.get(key) == 'e' }}
+                    >
+
+                    <span>
+                        {{ value.alternativas['e'] }}
+                    </span>
+                </label>
+
+            </div>
+            {% endfor %}
+            <button class="submit-button">Enviar</button>
     </form>
+
+    </main>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

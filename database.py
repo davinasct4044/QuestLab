@@ -1,5 +1,3 @@
-import email
-import sqlite3
 import sqlite3 as sql
 #importa a biblioteca do sqlite3(nativa)
 

@@ -6,32 +6,127 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
 
 </head>
 <body>
-    {% if session.get('username') %}
-        <h5>{{ session.get('username') }}</h5>
-        <div>
-            <form action="{{ url_for('sign_out', routename='result') }}" method="post">
-                <button>Sair</button>
-            </form>
+
+    <header class="top-bar">
+
+        <div class="brand">
+
+            <img
+                src="{{ url_for('static', filename='img/Simbolo_Questlab-removebg-preview.png') }}"
+                alt="QuestLab"
+                class="brand-logo"
+            >
+
+            <span class="brand-name">
+                Quest<span class="brand-highlight">Lab</span>
+            </span>
+
         </div>
-        <div>
-            <form action="{{ url_for('delete_account', routename='index', id=session.get('id')) }}" method="post">
-                <button>Excluir conta e sair</button>
-            </form>
+
+        {% if session.get('username') %}
+
+        <div class="profile-menu">
+
+            <button class="profile-button" onclick="togglemenu()">
+
+                <div class="profile-avatar">{{ session.get('username')[0].upper() }}</div>
+                <span class="username">{{ session.get('username') }}</span>
+                <span class="arrow">❯</span>
+
+            </button>
+
+            <div class="profile-dropdown" id="profile-dropdown">
+
+                <form action="{{ url_for('sign_out', routename='result') }}" method="post">
+                    <button class="signout-button">Sair</button>
+                </form>
+
+                <form action="{{ url_for('delete_account', routename='result', id=session.get('id')) }}" method="post">
+                    <button class="delete-button">Excluir conta e sair</button>
+                </form>
+
+                <a href="{{ url_for('edit_account',routename='result') }}">Trocar a senha</a>
+            </div>
         </div>
-    {% else %}
-        <a href="{{ url_for('sign_up', routename='result') }}">Inscreva-se para salvar sua prova </a>
-        <a href="{{ url_for('login', routename='index') }}">Entrar</a>
-    {% endif %}
-    <div>
-        <div>
-            <p>Seu aproveitamento foi de {{ porcentage }}%</p>
+
+        {% else %}
+
+        <div class="auth-buttons">
+
+            <a
+                class="signup-button"
+                href="{{ url_for('sign_up', routename='result') }}"
+            >
+                Inscreva-se
+            </a>
+
+            <a
+                class="login-button"
+                href="{{ url_for('login', routename='result') }}"
+            >
+                Entrar
+            </a>
+
         </div>
-        <div>
-            <p>Acertos: {{ result }}/{{ questions_quantity }}</p>
+
+        {% endif %}
+
+    </header>
+
+    <main class="result-container">
+
+        <div class="result-card">
+
+            <div class="score-circle" data-score="{{ porcentage }}">
+                <span id="score-value">0%</span>
+            </div>
+
+            <h1>Resultado da avaliação</h1>
+
+            <p class="score-text">
+
+                Acertos:
+                <strong>
+                    {{ result }}/{{ questions_quantity }}
+                </strong>
+
+            </p>
+
+            {% if porcentage >= 80 %}
+
+                <p class="performance excellent">
+                    Excelente desempenho 🚀
+                </p>
+
+            {% elif porcentage >= 60 %}
+
+                <p class="performance good">
+                    Bom desempenho 👍
+                </p>
+
+            {% else %}
+
+                <p class="performance improve">
+                    Continue praticando 📚
+                </p>
+
+            {% endif %}
+
+            <div class="result-actions">
+                <a href="{{ url_for('render_index') }}" class="back-button">
+                    Criar nova avaliação
+                </a>
+
+            </div>
+
         </div>
-    </div>
+
+    </main>
+    <script src="{{ url_for('static', filename='js/result.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

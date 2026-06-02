@@ -4,24 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | QuestLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-    <button onclick="history.back()"></button>
-    <form action="{{ url_for('login', routename=routename)}}" method="post">
-        <!--no action vc passa o comando usando o jinja para executar a função desejada em python, tem
-         que colocar o method tbm.-->
-        <div class="Form">
-                <!--tem q colocar name="" pq é assim que o flask identifica a tag -->
-            <div class="email">
-                <input name="email" placeholder="email">
-            </div>
-            <div class="senha">
-                <input name="password" placeholder="senha">
-            </div>
-            <button class="enviar">
-                enviar
-            </button>
-        </div>
-    </form>
+    <div class="login-container">
+        <button class="back-button" onclick="history.back()">
+            ← Voltar
+        </button>
+        <img
+            src="{{ url_for('static', filename='img/Simbolo_Questlab-removebg-preview.png') }}"
+            alt="QuestLab"
+            class="logo"
+        >
+        <h1>Entrar</h1>
+        <p class="login-subtitle">
+            Acesse sua conta para continuar
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="flash-message">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login', routename=routename)}}" method="post" class="login-form">
+            <!--no action vc passa o comando usando o jinja para executar a função desejada em python, tem
+             que colocar o method tbm.-->
+
+                    <!--tem q colocar name="" pq é assim que o flask identifica a tag -->
+
+                <input name="email" placeholder="Digite seu email">
+
+
+                <input type="password" name="password" placeholder="Digite sua senha">
+
+                <button class="enviar" type="submit">
+                    enviar
+                </button>
+
+        </form>
+        <a
+            href="{{ url_for('sign_up', routename=routename) }}"
+            class="register-link"
+        >
+            Ainda não possui conta? Cadastre-se
+        </a>
+    </div>
 </body>
 </html>
