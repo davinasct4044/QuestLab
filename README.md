@@ -50,7 +50,7 @@ O sistema utiliza **bcrypt** para gerar hashes seguros antes do armazenamento no
 
 ---
 
-## 🎯 Objetivo do Projeto
+## Objetivo do Projeto
 
 Este projeto foi desenvolvido com o objetivo de praticar:
 
